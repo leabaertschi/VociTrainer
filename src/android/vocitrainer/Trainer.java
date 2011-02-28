@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.vocitrainer.db.VociTrainerOpenHelper;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Trainer extends ListActivity {
     /** Called when the activity is first created. */
@@ -36,6 +40,19 @@ public class Trainer extends ListActivity {
                 startActivity(i);
             }
         });
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_language, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(this, "Just a test", Toast.LENGTH_SHORT).show();
+        return true;
     }
     
     private ArrayList<String> getLanguages() {

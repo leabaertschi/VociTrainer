@@ -24,11 +24,16 @@ public class VociTrainerOpenHelper extends SQLiteOpenHelper {
                 "name," +
                 "FOREIGN KEY (language) REFERENCES language(name)" +
                 ");");
+        db.execSQL("CREATE TABLE IF NOT EXISTS expression (" +
+                "id INTEGER PRIMARY KEY," +
+                "base_language TEXT," +
+                "foreign_language TEXT," +
+                "lesson_id INTEGER," +
+                "FOREIGN KEY (lesson_id) REFERENCES lesson(id))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        System.out.println("bla");
     }
 
 }
