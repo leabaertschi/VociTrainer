@@ -2,6 +2,7 @@ package android.vocitrainer.db;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,11 +15,15 @@ public class LanguageManager {
         dbHelper = new VociTrainerOpenHelper(context);
     }
     
+    /**
+     * Return all languages in the db
+     * @return {@link ArrayList}<String> languages
+     */
     public ArrayList<String> getLanguages() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query("language", null, null, null, null, null, null);
         ArrayList<String> langs = new ArrayList<String>();
-        if (c.getCount() <= 0) {
+        if (!c.moveToFirst()) {
             return langs;
         }
         langs.add(c.getString(0));
@@ -28,7 +33,19 @@ public class LanguageManager {
         return langs;
     }
     
-    public void addLanguage(String langauge) {
+    /**
+     * Add a new language to the db
+     * @param language String
+     * @return boolean true if the write was successful, false otherwise
+     */
+    public boolean addLanguage(String language) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", language);
+        long res = db.insert("language", null, values);
+        if (res == -1) {
+            return false;
+        }
+        return true;
     }
 }

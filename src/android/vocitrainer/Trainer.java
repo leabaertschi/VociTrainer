@@ -22,13 +22,15 @@ import android.widget.Toast;
 public class Trainer extends ListActivity {
     /** Called when the activity is first created. */
     
-    static final String[] LANGUAGES = new String[] {"Deutsch", "Svenska"};
+    private ArrayAdapter<String> languageAdapter;
+    private LanguageManager languageManager;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LanguageManager lm = new LanguageManager(getApplicationContext());
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, lm.getLanguages()));
+        languageManager = new LanguageManager(getApplicationContext());
+        languageAdapter = new ArrayAdapter<String>(this, R.layout.list_item, languageManager.getLanguages());
+        setListAdapter(languageAdapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
         
@@ -66,21 +68,26 @@ public class Trainer extends ListActivity {
     protected Dialog onCreateDialog(int id) {
         switch(id) {
         case 10:
-            EditText input = new EditText(this);
+            final EditText input = new EditText(this);
             Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.addNewLanguage)
             .setView(input)
             .setCancelable(true)
             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    
+                    String lang = input.getText().toString();
+                    if (languageManager.addLanguage(lang)){
+                        languageAdapter.add(lang);
+                        languageAdapter.notifyDataSetChanged();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), R.string.couldNotAddLanguage, Toast.LENGTH_LONG).show();
+                    }
                 }
             })
-            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                
+            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "Activity will continue", Toast.LENGTH_SHORT).show();
-                    
+                    dialog.dismiss();
                 }
             });
             AlertDialog dialog = builder.create();

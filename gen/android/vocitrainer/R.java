@@ -31,6 +31,8 @@ public final class R {
         public static final int addLesson=0x7f040004;
         public static final int addNewLanguage=0x7f040003;
         public static final int app_name=0x7f040001;
+        public static final int cancel=0x7f040005;
+        public static final int couldNotAddLanguage=0x7f040006;
         public static final int hello=0x7f040000;
     }
 }
