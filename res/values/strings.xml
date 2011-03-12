@@ -3,5 +3,6 @@
     <string name="hello">Hello World, Trainer!</string>
     <string name="app_name">VociTrainer</string>
     <string name="addLanguage">Add Language</string>
+    <string name="addNewLanguage">Add a new Language</string>
     <string name="addLesson">Add Lesson</string>
 </resources>

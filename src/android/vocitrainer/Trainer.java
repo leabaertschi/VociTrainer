@@ -1,20 +1,21 @@
 package android.vocitrainer;
 
-import java.util.ArrayList;
-
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.vocitrainer.db.VociTrainerOpenHelper;
+import android.vocitrainer.db.LanguageManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,13 +23,12 @@ public class Trainer extends ListActivity {
     /** Called when the activity is first created. */
     
     static final String[] LANGUAGES = new String[] {"Deutsch", "Svenska"};
-    private VociTrainerOpenHelper dbHelper;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = new VociTrainerOpenHelper(getApplicationContext());
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, getLanguages()));
+        LanguageManager lm = new LanguageManager(getApplicationContext());
+        setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, lm.getLanguages()));
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
         
@@ -51,21 +51,41 @@ public class Trainer extends ListActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Just a test", Toast.LENGTH_SHORT).show();
+        System.err.println(item);
+        switch(item.getItemId()) {
+        case R.id.add_language:
+            showDialog(10);
+            break;
+        default:
+            Toast.makeText(this, "Just a test", Toast.LENGTH_SHORT).show();
+        }
         return true;
     }
     
-    private ArrayList<String> getLanguages() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.query("language", null, null, null, null, null, null);
-        ArrayList<String> langs = new ArrayList<String>();
-        if (c.getCount() <= 0) {
-            return langs;
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch(id) {
+        case 10:
+            EditText input = new EditText(this);
+            Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.addNewLanguage)
+            .setView(input)
+            .setCancelable(true)
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    
+                }
+            })
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Activity will continue", Toast.LENGTH_SHORT).show();
+                    
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
-        langs.add(c.getString(0));
-        while(c.moveToNext()) {
-            langs.add(c.getString(0));
-        }
-        return langs;
+        return super.onCreateDialog(id);
     }
 }
