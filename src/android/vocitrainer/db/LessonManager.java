@@ -34,12 +34,14 @@ public class LessonManager {
                 null);
         ArrayList<String> lessons = new ArrayList<String>();
         if (!c.moveToFirst()) {
+            db.close();
             return lessons;
         }
         lessons.add(c.getString(0));
         while(c.moveToNext()) {
             lessons.add(c.getString(0));
         }
+        db.close();
         return lessons;
     }
 
@@ -55,6 +57,7 @@ public class LessonManager {
         values.put("name", lesson);
         values.put("language", language);
         long res = db.insert(tableName, null, values);
+        db.close();
         if (res == -1) {
             return false;
         }

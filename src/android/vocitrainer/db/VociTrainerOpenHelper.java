@@ -23,6 +23,7 @@ public class VociTrainerOpenHelper extends SQLiteOpenHelper {
                 "language TEXT," +
                 "name," +
                 "FOREIGN KEY (language) REFERENCES language(name)" +
+                "UNIQUE (language, name)" +
                 ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS expression (" +
                 "id INTEGER PRIMARY KEY," +

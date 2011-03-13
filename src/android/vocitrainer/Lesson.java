@@ -5,6 +5,7 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,8 +41,10 @@ public class Lesson extends ListActivity {
 
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                
+                Intent i = new Intent(getApplicationContext(), Lesson.class);
+                i.putExtra("language", Lesson.this.language);
+                i.putExtra("lesson", ((TextView) view).getText());
+                startActivity(i);
             }
         });
     }
@@ -87,7 +90,7 @@ public class Lesson extends ListActivity {
                     lessonAdapter.notifyDataSetChanged();
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), R.string.couldNotAddLanguage, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.couldNotAddLesson, Toast.LENGTH_LONG).show();
                 }
             }
         })

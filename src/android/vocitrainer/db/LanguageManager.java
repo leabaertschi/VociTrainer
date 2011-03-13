@@ -26,12 +26,14 @@ public class LanguageManager {
         Cursor c = db.query(tableName, null, null, null, null, null, null);
         ArrayList<String> langs = new ArrayList<String>();
         if (!c.moveToFirst()) {
+            db.close();
             return langs;
         }
         langs.add(c.getString(0));
         while(c.moveToNext()) {
             langs.add(c.getString(0));
         }
+        db.close();
         return langs;
     }
     
@@ -45,6 +47,7 @@ public class LanguageManager {
         ContentValues values = new ContentValues();
         values.put("name", language);
         long res = db.insert(tableName, null, values);
+        db.close();
         if (res == -1) {
             return false;
         }

@@ -13,6 +13,7 @@
             </intent-filter>
         </activity>
         <activity android:name="Lesson" android:label="lesson"></activity>
+        <activity android:name="Expression" android:label="expression"></activity>
 
     </application>
 </manifest>
