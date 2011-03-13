@@ -7,4 +7,5 @@
     <string name="addLesson">Add Lesson</string>
     <string name="cancel">Cancel</string>
     <string name="couldNotAddLanguage">Could not add language</string>
+    <string name="addNewLesson">Add a new Lesson</string>
 </resources>
