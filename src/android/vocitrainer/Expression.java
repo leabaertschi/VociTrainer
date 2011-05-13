@@ -1,16 +1,9 @@
 package android.vocitrainer;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.vocitrainer.db.ExpressionManager;
-import android.vocitrainer.db.LessonManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class Expression extends ListActivity {
     private String language;

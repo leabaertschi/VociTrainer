@@ -41,7 +41,7 @@ public class Lesson extends ListActivity {
 
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                Intent i = new Intent(getApplicationContext(), Lesson.class);
+                Intent i = new Intent(getApplicationContext(), Expression.class);
                 i.putExtra("language", Lesson.this.language);
                 i.putExtra("lesson", ((TextView) view).getText());
                 startActivity(i);
